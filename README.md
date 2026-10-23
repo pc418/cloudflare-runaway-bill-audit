@@ -23,7 +23,8 @@ scanned project and never calls application endpoints that perform paid work.
 stories; thanks to its maintainers.
 
 **Recommended model.** Run this skill with GPT-6 Astra (`gpt-6-astra`) at `xhigh` reasoning
-effort.
+effort. The report is only as good as the agent that writes it; read the
+[disclaimer](#disclaimer).
 
 ## Install
 
@@ -243,6 +244,22 @@ python3 -m unittest discover -s tests -t tests
 
 Tests run under a temporary `HOME`, without Cloudflare credentials and without network access
 (account checks run against a local fake API server).
+
+## Disclaimer
+
+This skill guides an agent; it cannot guarantee what the agent reports. The findings are the
+agent's judgement, and agents get things wrong: they miss paths, keep a pass the evidence does not
+support, raise an alarm for cheap work, or state a conditional risk as certain. In our own trials
+on a real project, two strong agents (Claude Opus 5.5 and GPT-6.1 Sol at `xhigh`) found the same
+core billing mechanisms and still differed: one kept two passes the other showed were false, both
+escalated cheap bookkeeping writes to alarms, and some finding titles claimed more than the source
+proved. Expect weaker or lower-effort agents to miss more and to report less accurately. More
+findings or alarms do not mean a better audit.
+
+Check each finding's evidence before acting on it, and never treat a clean report as proof that a
+project cannot run up a bill. The software is provided "as is", without warranty of any kind (see
+[LICENSE](LICENSE)); the authors are not responsible for audit results, missed risks or any
+charges you incur.
 
 ## License
 
