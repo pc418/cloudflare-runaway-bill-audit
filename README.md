@@ -1,5 +1,7 @@
 # cloudflare-runaway-bill-audit
 
+<p align="center"><img src="assets/banner-en.jpg" width="480" alt="A white-haired dragon girl with a magnifying glass beside an orange Cloudflare cloud bomb and a long bill: &quot;Your app should blow up. Your bill shouldn't.&quot;"></p>
+
 [中文说明](README.zh-CN.md)
 
 An agent skill that checks whether a Cloudflare project can run up a surprise bill. It looks

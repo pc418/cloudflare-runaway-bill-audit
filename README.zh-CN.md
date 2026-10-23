@@ -1,5 +1,7 @@
 # cloudflare-runaway-bill-audit
 
+<p align="center"><img src="assets/banner-zh-CN.jpg" width="480" alt="白发龙娘手持放大镜，旁边是橙色的 Cloudflare 云朵炸弹和一长串账单：&quot;让我帮你看看，是什么在偷偷烧你的钱。&quot;"></p>
+
 防止您的 Cloudflare 账单爆炸的检查 skill，由 Astra 撰写，并致谢 [serverlesshorrors.com](https://serverlesshorrors.com/)。
 
 [English](README.md)
