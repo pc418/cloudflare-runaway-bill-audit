@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+prompt-log.md
+.pytest_cache/
+
+# Internal records, kept locally, not published
+docs/
+LESSONS.md
+plan.md
+*.bak
+*.bak/
+bak/
+
+# Agent worktrees
+.claude/
+wt-*/

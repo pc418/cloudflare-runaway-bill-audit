@@ -1,0 +1,36 @@
+# Memory ingest service
+name = "memory-ingest"
+main = "src/index.ts"
+compatibility_date = "2026-07-15"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[[kv_namespaces]]
+binding = "MEMORY_KV"
+id = "0f2ac74b498b48028cb68387c421e279"
+
+[[queues.producers]]
+binding = "INGEST"
+queue = "memory-ingest"
+
+[[queues.consumers]]
+queue = "memory-ingest"
+max_batch_size = 10
+
+[ai]
+binding = "AI"
+
+[env.staging]
+name = "memory-ingest-staging"
+workers_dev = false
+
+[[env.staging.queues.producers]]
+binding = "INGEST"
+queue = "memory-ingest-staging"
+
+[[env.staging.queues.consumers]]
+queue = "memory-ingest-staging"
+max_retries = 3
+dead_letter_queue = "memory-ingest-staging-dlq"

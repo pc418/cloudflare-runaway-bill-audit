@@ -1,0 +1,6 @@
+{
+  // unfinished edit
+  "name": "half-edited-json",
+  "main": "src/index.ts"
+  "ai": { "binding": "AI" }
+}

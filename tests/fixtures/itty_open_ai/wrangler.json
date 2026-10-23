@@ -1,0 +1,13 @@
+{
+  "name": "snapshot-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true },
+  "ai": { "binding": "AI" },
+  "browser": { "binding": "MYBROWSER" },
+  "images": { "binding": "IMAGES" },
+  "kv_namespaces": [{ "binding": "SESSIONS", "id": "6f1e0d2c3b4a59687766554433221100" }],
+  "r2_buckets": [{ "binding": "SHOTS", "bucket_name": "snapshot-shots" }],
+  "limits": { "cpu_ms": 300000, "subrequests": 50000 }
+}

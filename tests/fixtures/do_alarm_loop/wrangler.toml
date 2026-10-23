@@ -1,0 +1,23 @@
+name = "presence-tracker"
+main = "src/index.ts"
+compatibility_date = "2026-08-01"
+workers_dev = false
+
+routes = [
+  { pattern = "presence.example.com", custom_domain = true },
+]
+
+[[durable_objects.bindings]]
+name = "ROOMS"
+class_name = "Room"
+
+[[durable_objects.bindings]]
+name = "SYNCER"
+class_name = "Syncer"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Room", "Syncer"]
+
+[limits]
+cpu_ms = 50
