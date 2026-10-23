@@ -195,5 +195,81 @@ class AgentReviewFlow(unittest.TestCase):
         self.assertFalse((out / "report.html").exists())
 
 
+NEW_SCHEMA = "cloudflare-runaway-bill-audit/findings@1"
+LEGACY_SCHEMA = "cloudflare-no-bill-explode/findings@1"  # written before the rename; must stay readable
+
+
+class SchemaId(unittest.TestCase):
+    """validate and render share one contract for the schema id: the current id and the
+    pre-rename id load; anything else, or a non-string, is a validation error."""
+
+    def write(self, doc):
+        out = Path(tempfile.mkdtemp(prefix="nobill-schema-"))
+        (out / "findings.json").write_text(json.dumps(doc))
+        return out
+
+    def assert_loads(self, schema):
+        d = minimal_doc()
+        d["schema"] = schema
+        out = self.write(d)
+        cp = _util.run_cli(["validate", str(out / "findings.json")])
+        self.assertEqual((cp.returncode, cp.stdout.strip()), (0, "ok"), cp.stderr)
+        cp = _util.run_cli(["render", str(out / "findings.json")])
+        self.assertEqual(cp.returncode, 0, cp.stderr)
+        self.assertIn("Catch-all", (out / "report.html").read_text())
+        self.assertTrue((out / "report.md").exists())
+        # the producer's id is left as written
+        self.assertEqual(json.loads((out / "findings.json").read_text())["schema"], schema)
+
+    def assert_rejected(self, doc, expect):
+        out = self.write(doc)
+        for cmd in ("validate", "render"):
+            cp = _util.run_cli([cmd, str(out / "findings.json")])
+            self.assertEqual(cp.returncode, 2, (cmd, cp.stdout, cp.stderr))
+            self.assertNotIn("Traceback", cp.stderr, cmd)
+            self.assertIn("is not a valid findings document", cp.stderr, cmd)
+            self.assertIn(expect, cp.stderr, cmd)
+        self.assertFalse((out / "report.html").exists())
+        self.assertFalse((out / "report.md").exists())
+
+    def test_current_id_loads(self):
+        self.assert_loads(NEW_SCHEMA)
+
+    def test_legacy_id_loads(self):
+        self.assert_loads(LEGACY_SCHEMA)
+
+    def test_unsupported_ids_rejected(self):
+        for schema in ("cloudflare-runaway-bill-audit/findings@2", "cloudflare-no-bill-explode/findings@2",
+                       "other-tool/findings@1", "cloudflare-runaway-bill-audit/findings@1 ", "CLOUDFLARE-RUNAWAY-BILL-AUDIT/findings@1", ""):
+            with self.subTest(schema=schema):
+                d = minimal_doc()
+                d["schema"] = schema
+                self.assert_rejected(d, "schema:")
+        d = minimal_doc()
+        del d["schema"]
+        self.assert_rejected(d, "schema:")
+
+    def test_non_string_schema_rejected(self):
+        for schema in ([], [NEW_SCHEMA], {}, {"id": LEGACY_SCHEMA}, 1, None, True):
+            with self.subTest(schema=schema):
+                d = minimal_doc()
+                d["schema"] = schema
+                self.assertTrue(validate_document(d))
+                self.assert_rejected(d, "schema:")
+
+    def test_legacy_id_gets_full_validation(self):
+        for schema in (NEW_SCHEMA, LEGACY_SCHEMA):
+            with self.subTest(schema=schema):
+                d = minimal_doc()
+                d["schema"] = schema
+                d["findings"][0]["severity"] = "unknown"  # no 'missing'
+                d["findings"][0]["fix"]["docs"].append({"title": "x", "url": "javascript:alert(1)"})
+                problems = validate_document(d)
+                self.assertEqual(len(problems), 2, problems)
+                self.assertFalse(any(p.startswith("schema") for p in problems), problems)
+                self.assert_rejected(d, "missing permission or reason")
+                self.assert_rejected(d, "http(s) 'url'")
+
+
 if __name__ == "__main__":
     unittest.main()

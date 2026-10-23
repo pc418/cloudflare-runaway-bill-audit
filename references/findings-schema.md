@@ -1,4 +1,4 @@
-# findings.json schema (`cloudflare-no-bill-explode/findings@1`)
+# findings.json schema (`cloudflare-runaway-bill-audit/findings@1`)
 
 `scripts/audit.py scan` writes it, the auditing agent edits it, `scripts/audit.py render`
 validates and renders it. `scripts/audit.py validate <file>` runs only the validation.
@@ -9,7 +9,7 @@ same rules.
 
 | Key | Type | Meaning |
 |---|---|---|
-| `schema` | string | Always `cloudflare-no-bill-explode/findings@1`. |
+| `schema` | string | `cloudflare-runaway-bill-audit/findings@1`. Documents written before the skill was renamed carry `cloudflare-no-bill-explode/findings@1`; they have the same structure and still validate and render. |
 | `tool` | object | `{name, version}` of the tool that wrote the scan. |
 | `generated_at` | string | ISO-8601 UTC time of the scan. |
 | `project` | string | Absolute path of the scanned directory. |

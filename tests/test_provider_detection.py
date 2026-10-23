@@ -54,7 +54,8 @@ class ProviderDetection(unittest.TestCase):
         self.assertEqual(cp.returncode, 0, cp.stderr)
         doc = json.loads((reports / "findings.json").read_text())
         self.assertEqual(doc["providers"], ["cloudflare"])
-        self.assertEqual(doc["schema"], "cloudflare-no-bill-explode/findings@1")
+        self.assertEqual(doc["schema"], "cloudflare-runaway-bill-audit/findings@1")
+        self.assertEqual(doc["tool"]["name"], "cloudflare-runaway-bill-audit")
         self.assertTrue(any(f["rule"] == "CF-NO-CONFIG" for f in doc["findings"]))
 
     def test_nested_wrangler_is_still_detected(self):

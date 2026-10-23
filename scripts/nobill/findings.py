@@ -15,7 +15,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-SCHEMA_ID = "cloudflare-no-bill-explode/findings@1"
+SCHEMA_ID = "cloudflare-runaway-bill-audit/findings@1"
+# Documents written before the skill was renamed carry this id; the structure is identical.
+LEGACY_SCHEMA_IDS = ("cloudflare-no-bill-explode/findings@1",)
+ACCEPTED_SCHEMA_IDS = (SCHEMA_ID, *LEGACY_SCHEMA_IDS)
 TOOL_NAME = "cloudflare-runaway-bill-audit"
 TOOL_VERSION = "0.1.0"
 
@@ -179,8 +182,10 @@ def validate_document(doc: Any) -> list[str]:
     errors: list[str] = []
     if not isinstance(doc, dict):
         return ["document: expected a JSON object"]
-    if doc.get("schema") != SCHEMA_ID:
-        errors.append(f"schema: expected '{SCHEMA_ID}'")
+    schema = doc.get("schema")
+    if not (isinstance(schema, str) and schema in ACCEPTED_SCHEMA_IDS):
+        errors.append(f"schema: expected '{SCHEMA_ID}' (or the legacy "
+                      + ", ".join(f"'{s}'" for s in LEGACY_SCHEMA_IDS) + ")")
     findings = _req(doc, "findings", list, "document", errors) or []
     incidents = doc.get("incidents") if isinstance(doc.get("incidents"), dict) else {}
     seen_ids: set[str] = set()
@@ -283,7 +288,7 @@ def load_document(path: Path) -> dict[str, Any]:
         raise SchemaError(f"{path} is not valid JSON: line {exc.lineno} col {exc.colno}: {exc.msg}") from None
     problems = validate_document(doc)
     if problems:
-        raise SchemaError(f"{path} does not match {SCHEMA_ID}:\n  - " + "\n  - ".join(problems))
+        raise SchemaError(f"{path} is not a valid findings document:\n  - " + "\n  - ".join(problems))
     return doc
 
 
