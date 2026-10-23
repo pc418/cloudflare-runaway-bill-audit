@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""cloudflare-no-bill-explode entry point: `python3 scripts/audit.py scan <project>`."""
+"""cloudflare-runaway-bill-audit entry point: `python3 scripts/audit.py scan <project>`."""
 
 import sys
 from pathlib import Path

@@ -1,1 +1,1 @@
-"""cloudflare-no-bill-explode: audit Cloudflare projects for the mistakes behind runaway bills."""
+"""cloudflare-runaway-bill-audit: audit Cloudflare projects for the mistakes behind runaway bills."""

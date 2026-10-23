@@ -1,4 +1,4 @@
-# cloudflare-no-bill-explode
+# cloudflare-runaway-bill-audit
 
 防止您的 Cloudflare 账单爆炸的检查 skill，由 Astra 撰写，并致谢 [serverlesshorrors.com](https://serverlesshorrors.com/)。
 
@@ -19,10 +19,10 @@
 使用 [skills CLI](https://github.com/vercel-labs/skills)：
 
 ```bash
-npx skills add pc418/cloudflare-no-bill-explode
+npx skills add pc418/cloudflare-runaway-bill-audit
 ```
 
-或者把本仓库克隆到 agent 的 skills 目录（Claude Code 为 `~/.claude/skills/cloudflare-no-bill-explode` 或 `<project>/.claude/skills/...`）。只需要 Python 3.11+，无其他依赖（仅使用标准库）。
+或者把本仓库克隆到 agent 的 skills 目录（Claude Code 为 `~/.claude/skills/cloudflare-runaway-bill-audit` 或 `<project>/.claude/skills/...`）。只需要 Python 3.11+，无其他依赖（仅使用标准库）。
 
 ## 使用
 

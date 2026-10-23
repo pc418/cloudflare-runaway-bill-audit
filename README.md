@@ -1,4 +1,4 @@
-# cloudflare-no-bill-explode
+# cloudflare-runaway-bill-audit
 
 [中文说明](README.zh-CN.md)
 
@@ -28,11 +28,11 @@ effort.
 With the [skills CLI](https://github.com/vercel-labs/skills):
 
 ```bash
-npx skills add pc418/cloudflare-no-bill-explode
+npx skills add pc418/cloudflare-runaway-bill-audit
 ```
 
 Or clone this repository into your agent's skills directory (for Claude Code,
-`~/.claude/skills/cloudflare-no-bill-explode` or `<project>/.claude/skills/...`). It needs
+`~/.claude/skills/cloudflare-runaway-bill-audit` or `<project>/.claude/skills/...`). It needs
 Python 3.11+ and nothing else (standard library only).
 
 ## Usage

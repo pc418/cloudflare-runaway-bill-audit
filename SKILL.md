@@ -1,5 +1,5 @@
 ---
-name: cloudflare-no-bill-explode
+name: cloudflare-runaway-bill-audit
 description: >-
   Audit a Cloudflare project's exposure to runaway bills and denial-of-wallet attacks.
   Use real billing-incident mechanisms to investigate paid work, feedback loops, retries,

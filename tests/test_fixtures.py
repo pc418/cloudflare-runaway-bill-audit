@@ -310,7 +310,7 @@ class OutputContainment(unittest.TestCase):
         """The documented invocation `python3 <skill>/scripts/audit.py scan .` with the skill
         installed inside the project (e.g. .claude/skills/) must not leave __pycache__ there."""
         proj = copy_fixture("clean")
-        skill = proj / ".claude" / "skills" / "cloudflare-no-bill-explode"
+        skill = proj / ".claude" / "skills" / "cloudflare-runaway-bill-audit"
         shutil.copytree(_util.SCRIPTS, skill / "scripts", ignore=shutil.ignore_patterns("__pycache__"))
         before = tree_digest(proj)
         out = Path(tempfile.mkdtemp(prefix="nobill-out-"))

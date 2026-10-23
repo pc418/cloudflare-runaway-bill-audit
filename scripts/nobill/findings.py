@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any
 
 SCHEMA_ID = "cloudflare-no-bill-explode/findings@1"
-TOOL_NAME = "cloudflare-no-bill-explode"
+TOOL_NAME = "cloudflare-runaway-bill-audit"
 TOOL_VERSION = "0.1.0"
 
 SEVERITIES = ("alarm", "suggestion", "unknown", "pass", "not-applicable")
